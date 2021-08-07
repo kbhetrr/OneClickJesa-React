@@ -1,4 +1,5 @@
-import { Row, Col } from "react-bootstrap";
+import React from "react";
+import { Container, Row, Col } from "react-bootstrap";
 
 const DATA = [
   "향근현현현 유",

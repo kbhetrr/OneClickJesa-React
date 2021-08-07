@@ -1,11 +1,12 @@
 import React from "react";
-const About = () => {
+
+const Info = () => {
   return (
     <div className="container">
       <h1 className="text-center" style={{ paddingTop: "30%" }}>
-        About
+        Info
       </h1>
     </div>
   );
 };
-export default About;
+export default Info;

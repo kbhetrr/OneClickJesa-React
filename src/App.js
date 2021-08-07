@@ -1,44 +1,27 @@
-import React from 'react';
-import {
-  BrowserRouter as Router,
-  Route,
-  Redirect,
-  Switch
-} from 'react-router-dom';
+import React from "react";
+import { Route, Switch } from "react-router-dom";
 
-import About from './pages/About/About';
-import Contact from './pages/Contact/Contact';
-import Home from './pages/Home/Home';
-import Services from './pages/Service/Services';
-import Testimonial from './pages/Testimonial/Testimonial';
-import Navbar from './Components/Navbar/Navbar';
+import Home from "./pages/Home/Home";
+import Write from "./pages/Write/Write";
+import Info from "./pages/Info/Info";
+import About from "./pages/About/About";
+import Navigation from "./Components/Navigation";
+
+import Footer from "./Components/Footer";
 
 const App = () => {
   return (
-   <Router>
-    <Navbar/>
-    <main>
+    <div className="App">
+      <Navigation />
       <Switch>
-        <Route path="/" exact>
-          <Home/>
-        </Route>
-        <Route path="/about" exact>
-          <About/>
-        </Route>
-        <Route path="/service" exact>
-          <Services/>
-        </Route>
-        <Route path="/testimonial" exact>
-          <Testimonial/>
-        </Route>
-        <Route path="/contact" exact>
-          <Contact/>
-        </Route>
-        <Redirect to="/" />
+        <Route exact path="/" component={Home} />
+        <Route path="/write" component={Write} />
+        <Route path="/info" component={Info} />
+        <Route path="/about" component={About} />
       </Switch>
-    </main>
-   </Router>
+      <Footer />
+    </div>
   );
-}
+};
 
 export default App;

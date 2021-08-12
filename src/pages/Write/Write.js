@@ -11,6 +11,7 @@ import FormHelperText from "@material-ui/core/FormHelperText";
 import Button from "@material-ui/core/Button";
 
 import NameData from "../../Datas/Name_Data.json";
+import getLunarInfo from "./getLunarInfo";
 
 const RelationData = [
   { label: "조부모님" },
@@ -31,6 +32,15 @@ const Write = () => {
     console.log(Date);
     console.log(Relation);
     console.log(FamilyOrigin);
+
+    if (Date != null) {
+      const DateArr = Date.split("-");
+      const year = DateArr[0];
+      const month = DateArr[1];
+      const day = DateArr[2];
+
+      getLunarInfo(year, month, day);
+    }
   };
 
   return (

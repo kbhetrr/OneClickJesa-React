@@ -30,11 +30,13 @@ const Chukmoon = () => {
   return (
     <Col
       className="border border-dark"
-      sm={6}
+      xs={10}
+      sm={10}
+      md={4}
       style={{
         padding: 32,
         margin: 32,
-        fontFamily: "NanumGothic",
+        fontFamily: "Eulyoo1945-SemiBold",
         fontWeight: "bold",
         fontSize: 16,
         backgroundColor: "white",

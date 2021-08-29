@@ -26,8 +26,11 @@ const Write = () => {
   const [Date, setDate] = useState(null);
   const [Relation, setRelation] = useState(null);
   const [FamilyOrigin, setFamilyOrigin] = useState(null);
+  const [Loading, setLoading] = useState(false);
 
   const WriteChukmoon = () => {
+    setLoading(true);
+
     console.log(Name);
     console.log(Date);
     console.log(Relation);
@@ -41,24 +44,32 @@ const Write = () => {
 
       getLunarInfo(year, month, day);
     }
+
+    setLoading(false);
   };
 
   return (
-    <Container>
-      <Row className="justify-content-md-center">
-        <Col sm={6} style={{ margin: 16 }}>
+    <Container fluid style={{ backgroundColor: "#e5e4e9" }}>
+      <Row style={{ justifyContent: "center" }}>
+        <Col xs={10} sm={10} md={6} style={{ margin: 32 }}>
           <Row>
-            <h4 style={{ fontFamily: "NanumGothic" }}>
+            <span
+              style={{ fontFamily: "SBAggroB", fontSize: 32, color: "#436b95" }}
+            >
               손쉽게 축문을 작성할 수 있습니다.
-            </h4>
+            </span>
           </Row>
           <Row>
-            <h6>클릭 몇 번만으로</h6>
+            <span
+              style={{ fontFamily: "SBAggroL", fontSize: 20, color: "gray" }}
+            >
+              클릭 몇 번만으로
+            </span>
           </Row>
         </Col>
       </Row>
-      <Row className="justify-content-md-center">
-        <Col sm={6} style={{ padding: 16 }}>
+      <Row style={{ justifyContent: "center" }}>
+        <Col xs={10} sm={10} md={4} style={{ padding: 16 }}>
           <form>
             <FormControl style={{ width: "100%" }}>
               <InputLabel htmlFor="my-input">
@@ -117,8 +128,8 @@ const Write = () => {
           </form>
         </Col>
       </Row>
-      <Row className="justify-content-md-center">
-        <Chukmoon />
+      <Row style={{ justifyContent: "center" }}>
+        {Loading ? <div>축문 작성 중...</div> : <Chukmoon />}
       </Row>
     </Container>
   );

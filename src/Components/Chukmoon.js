@@ -44,14 +44,14 @@ const Chukmoon = (props) => {
       className="border border-dark"
       xs={11}
       sm={11}
-      md={6}
+      md={4}
       style={{
         paddingTop: 32,
         paddingBottom: 32,
         margin: 8,
         fontFamily: "Eulyoo1945-SemiBold",
         fontWeight: "bold",
-        fontSize: 16,
+        fontSize: 14,
         backgroundColor: "white",
         borderRadius: 10,
       }}
@@ -71,6 +71,7 @@ const Chukmoon = (props) => {
           </Row>
         );
       })}
+
       {/*DATA_.reverse().map((s) => {
         idxRow += 1;
         return (

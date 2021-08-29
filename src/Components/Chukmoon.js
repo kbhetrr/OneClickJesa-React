@@ -1,5 +1,5 @@
 import React from "react";
-import { Row, Col } from "react-bootstrap";
+import { Row, Col, Button, Container } from "react-bootstrap";
 
 const DATA = [
   "향근현현현 유",
@@ -33,14 +33,15 @@ let idxCol = 0;
 const Chukmoon = (props) => {
   return (
     <Col
-      key={"Chukmoon"}
+      id="ChukmoonArea"
       className="border border-dark"
-      xs={10}
-      sm={10}
+      xs={11}
+      sm={11}
       md={4}
       style={{
-        padding: 32,
-        margin: 32,
+        paddingTop: 32,
+        paddingBottom: 32,
+        margin: 8,
         fontFamily: "Eulyoo1945-SemiBold",
         fontWeight: "bold",
         fontSize: 16,
@@ -55,7 +56,7 @@ const Chukmoon = (props) => {
             {s.split("").map((text) => {
               idxCol += 1;
               return (
-                <Col key={idxCol} style={{ textAlign: "center" }}>
+                <Col key={idxCol} style={{ textAlign: "center", width: 1 }}>
                   {text}
                 </Col>
               );

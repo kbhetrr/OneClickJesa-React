@@ -13,6 +13,7 @@ import NameData from "../../Datas/Name_Data.json";
 import getLunarInfo from "./getLunarInfo";
 
 import { toast } from "react-toastify";
+import html2canvas from "html2canvas";
 
 const RelationData = [
   { label: "고조부모" },
@@ -183,8 +184,26 @@ const Write = () => {
     setFamilyOrigin(null);
   };
 
+  const onSaveAs = (uri, filename) => {
+    let link = document.createElement("a");
+    document.body.appendChild(link);
+    link.href = uri;
+    link.download = filename;
+    link.click();
+    document.body.removeChild(link);
+  };
+
+  const onCapture = () => {
+    html2canvas(document.getElementById("ChukmoonArea")).then((canvas) => {
+      onSaveAs(canvas.toDataURL("image/png"), "image-download.png");
+    });
+  };
+
   return (
-    <Container fluid style={{ backgroundColor: "#e5e4e9" }}>
+    <Container
+      fluid
+      style={{ backgroundColor: "#e5e4e9", paddingTop: 24, paddingBottom: 48 }}
+    >
       <Row style={{ justifyContent: "center" }}>
         <Col xs={10} sm={10} md={6} style={{ margin: 16 }}>
           <Row>
@@ -262,6 +281,7 @@ const Write = () => {
                 </Col>
                 <Col>
                   <TextField
+                    size="small"
                     fullWidth
                     type="date"
                     value={WriteDate}
@@ -388,6 +408,25 @@ const Write = () => {
       </Row>
       <Row style={{ justifyContent: "center" }}>
         {Loading ? <div>축문 작성 중...</div> : <Chukmoon Hang1={Hang1} />}
+      </Row>
+      <Row style={{ justifyContent: "center" }}>
+        <Col xs={6} sm={6} md={4}>
+          <Button
+            fullWidth
+            variant="contained"
+            style={{
+              marginTop: 8,
+              fontFamily: "SBAggroL",
+              color: "#ffffff",
+              justifyContent: "center",
+              backgroundColor: "gray",
+              borderRadius: 20,
+            }}
+            onClick={onCapture}
+          >
+            출력하기
+          </Button>
+        </Col>
       </Row>
     </Container>
   );

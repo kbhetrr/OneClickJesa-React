@@ -28,9 +28,12 @@ const DATA = [
 
 const DATA_1 = ["유 세차 ㅇㅇ ㅇ월 ㅇㅇ 삭 ㅇㅇ일 ㅇㅇ", ""];
 
-const Chukmoon = () => {
+let idxRow = 0;
+let idxCol = 0;
+const Chukmoon = (props) => {
   return (
     <Col
+      key={"Chukmoon"}
       className="border border-dark"
       xs={10}
       sm={10}
@@ -45,13 +48,22 @@ const Chukmoon = () => {
         borderRadius: 10,
       }}
     >
-      {DATA.map((s) => (
-        <Row>
-          {s.split("").map((text) => (
-            <Col style={{ textAlign: "center" }}>{text}</Col>
-          ))}
-        </Row>
-      ))}
+      {DATA.map((s) => {
+        idxRow += 1;
+        return (
+          <Row key={idxRow}>
+            {s.split("").map((text) => {
+              idxCol += 1;
+              return (
+                <Col key={idxCol} style={{ textAlign: "center" }}>
+                  {text}
+                </Col>
+              );
+            })}
+          </Row>
+        );
+      })}
+      <Row>{props.Hang1}</Row>
     </Col>
   );
 };

@@ -100,6 +100,11 @@ const Write = () => {
   const [FamilyOrigin, setFamilyOrigin] = useState(null);
   const [Loading, setLoading] = useState(false);
 
+  const [isMakeChukmoon, setisMakeChukmoon] = useState(false);
+  const [ChukmoonData, setChukmoonData] = useState({});
+
+  const [Hang1, setHang1] = useState("");
+
   const WriteChukmoon = () => {
     setLoading(true);
 
@@ -120,8 +125,8 @@ const Write = () => {
       return;
     }
 
-    let ChukmoonHangulData = new Object();
-    let ChukmoonHanjaData = new Object();
+    let ChukmoonHangulData = {};
+    let ChukmoonHanjaData = {};
 
     const DateArr = WriteDate.split("-");
     const year = DateArr[0];
@@ -133,6 +138,7 @@ const Write = () => {
     const LunarData = getLunarInfo(year, month, day);
     LunarData.then((Data) => {
       ChukmoonHangulData["1항"] = Data.lunSecha.slice(0, 2);
+      setHang1(Data.lunSecha.slice(0, 2));
       ChukmoonHanjaData["1항"] = Data.lunSecha.slice(3, 5);
 
       ChukmoonHangulData["2항"] = DayHangul[Number(Data.lunMonth) - 1];
@@ -160,10 +166,12 @@ const Write = () => {
       }).catch((e) => {
         console.log(e);
       });
+    }).catch((e) => {
+      console.log(e);
     });
 
-    console.log(ChukmoonHangulData);
-    console.log(ChukmoonHanjaData);
+    setChukmoonData(ChukmoonHangulData);
+    setisMakeChukmoon(true);
 
     setLoading(false);
   };
@@ -379,7 +387,7 @@ const Write = () => {
         </Col>
       </Row>
       <Row style={{ justifyContent: "center" }}>
-        {Loading ? <div>축문 작성 중...</div> : <Chukmoon />}
+        {Loading ? <div>축문 작성 중...</div> : <Chukmoon Hang1={Hang1} />}
       </Row>
     </Container>
   );

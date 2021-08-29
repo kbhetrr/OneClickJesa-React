@@ -12,12 +12,85 @@ import Button from "@material-ui/core/Button";
 import NameData from "../../Datas/Name_Data.json";
 import getLunarInfo from "./getLunarInfo";
 
+import { toast } from "react-toastify";
+
 const RelationData = [
-  { label: "조부모님" },
-  { label: "부모님" },
-  { label: "부모님" },
-  { label: "부모님" },
-  { label: "부모님" },
+  { label: "고조부모" },
+  { label: "증조부모" },
+  { label: "조부모" },
+  { label: "부모" },
+  { label: "백부모" },
+  { label: "숙부모" },
+  { label: "형, 형수" },
+  { label: "동생, 제수" },
+  { label: "아들, 며느리" },
+  { label: "남편, 아내" },
+];
+
+const DayHangul = [
+  "일",
+  "이",
+  "삼",
+  "사",
+  "오",
+  "육",
+  "칠",
+  "팔",
+  "구",
+  "십",
+  "십일",
+  "십이",
+  "십삼",
+  "십사",
+  "십오",
+  "십육",
+  "십칠",
+  "십팔",
+  "십구",
+  "이십",
+  "이십일",
+  "이십이",
+  "이십삼",
+  "이십사",
+  "이십오",
+  "이십육",
+  "이십칠",
+  "이십팔",
+  "이십구",
+  "삼십",
+];
+
+const DayHanja = [
+  "一",
+  "二",
+  "三",
+  "四",
+  "五",
+  "六",
+  "七",
+  "八",
+  "九",
+  "十",
+  "十一",
+  "十二",
+  "十三",
+  "十四",
+  "十五",
+  "十六",
+  "十七",
+  "十八",
+  "十九",
+  "二十",
+  "二十一",
+  "二十二",
+  "二十三",
+  "二十四",
+  "二十五",
+  "二十六",
+  "二十七",
+  "二十八",
+  "二十九",
+  "三十",
 ];
 
 const Write = () => {
@@ -30,19 +103,67 @@ const Write = () => {
   const WriteChukmoon = () => {
     setLoading(true);
 
-    console.log(Name);
-    console.log(WriteDate);
-    console.log(Relation);
-    console.log(FamilyOrigin);
-
-    if (WriteDate !== "") {
-      const DateArr = WriteDate.split("-");
-      const year = DateArr[0];
-      const month = DateArr[1];
-      const day = DateArr[2];
-
-      getLunarInfo(year, month, day);
+    if (Name === "") {
+      toast.error("제주의 이름을 입력해주세요.");
+      return;
     }
+    if (WriteDate === "") {
+      toast.error("제사지내는 날짜를 입력해주세요.");
+      return;
+    }
+    if (Relation === null) {
+      toast.error("제주와의 관계를 선택해주세요.");
+      return;
+    }
+    if (FamilyOrigin === null) {
+      toast.error("본관, 성씨를 선택해주세요.");
+      return;
+    }
+
+    let ChukmoonHangulData = new Object();
+    let ChukmoonHanjaData = new Object();
+
+    const DateArr = WriteDate.split("-");
+    const year = DateArr[0];
+    const month = DateArr[1];
+    const day = DateArr[2];
+
+    let SolarDay = new Date(year + "-" + month + "-" + day);
+
+    const LunarData = getLunarInfo(year, month, day);
+    LunarData.then((Data) => {
+      ChukmoonHangulData["1항"] = Data.lunSecha.slice(0, 2);
+      ChukmoonHanjaData["1항"] = Data.lunSecha.slice(3, 5);
+
+      ChukmoonHangulData["2항"] = DayHangul[Number(Data.lunMonth) - 1];
+      ChukmoonHanjaData["2항"] = DayHanja[Number(Data.lunMonth) - 1];
+
+      ChukmoonHangulData["4항"] = DayHangul[Number(Data.lunDay) - 1];
+      ChukmoonHanjaData["4항"] = DayHanja[Number(Data.lunDay) - 1];
+
+      ChukmoonHangulData["5항"] = Data.lunIljin.slice(0, 2);
+      ChukmoonHanjaData["5항"] = Data.lunSecha.slice(3, 5);
+
+      let LunarFirstDay = new Date(
+        SolarDay.setDate(SolarDay.getDate() - (Data.lunDay - 1))
+      );
+
+      const LunarFirstData = getLunarInfo(
+        LunarFirstDay.getFullYear(),
+        String(LunarFirstDay.getMonth() + 1).padStart(2, "0"),
+        String(LunarFirstDay.getDate()).padStart(2, "0")
+      );
+
+      LunarFirstData.then((FirstData) => {
+        ChukmoonHangulData["3항"] = FirstData.lunIljin.slice(0, 2);
+        ChukmoonHanjaData["3항"] = FirstData.lunIljin.slice(3, 5);
+      }).catch((e) => {
+        console.log(e);
+      });
+    });
+
+    console.log(ChukmoonHangulData);
+    console.log(ChukmoonHanjaData);
 
     setLoading(false);
   };

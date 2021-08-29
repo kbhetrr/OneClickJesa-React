@@ -9,6 +9,9 @@ import Navigation from "./Components/Navigation";
 
 import Footer from "./Components/Footer";
 
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 const App = () => {
   return (
     <div className="App">
@@ -20,6 +23,11 @@ const App = () => {
         <Route path="/about" component={About} />
       </Switch>
       <Footer />
+      <ToastContainer
+        position="top-right"
+        autoClose={3000}
+        hideProgressBar={true}
+      />
     </div>
   );
 };

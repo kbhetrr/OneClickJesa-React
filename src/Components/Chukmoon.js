@@ -26,6 +26,8 @@ const DATA = [
   "     우ㅇ",
 ];
 
+const DATA_1 = ["유 세차 ㅇㅇ ㅇ월 ㅇㅇ 삭 ㅇㅇ일 ㅇㅇ", ""];
+
 const Chukmoon = () => {
   return (
     <Col
@@ -40,6 +42,7 @@ const Chukmoon = () => {
         fontWeight: "bold",
         fontSize: 16,
         backgroundColor: "white",
+        borderRadius: 10,
       }}
     >
       {DATA.map((s) => (

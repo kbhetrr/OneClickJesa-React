@@ -5,7 +5,6 @@ import Chukmoon from "../../Components/Chukmoon";
 import TextField from "@material-ui/core/TextField";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import FormControl from "@material-ui/core/FormControl";
-import InputLabel from "@material-ui/core/InputLabel";
 import Input from "@material-ui/core/Input";
 import FormHelperText from "@material-ui/core/FormHelperText";
 import Button from "@material-ui/core/Button";
@@ -22,8 +21,8 @@ const RelationData = [
 ];
 
 const Write = () => {
-  const [Name, setName] = useState(null);
-  const [Date, setDate] = useState(null);
+  const [Name, setName] = useState("");
+  const [WriteDate, setWriteDate] = useState("");
   const [Relation, setRelation] = useState(null);
   const [FamilyOrigin, setFamilyOrigin] = useState(null);
   const [Loading, setLoading] = useState(false);
@@ -32,12 +31,12 @@ const Write = () => {
     setLoading(true);
 
     console.log(Name);
-    console.log(Date);
+    console.log(WriteDate);
     console.log(Relation);
     console.log(FamilyOrigin);
 
-    if (Date != null) {
-      const DateArr = Date.split("-");
+    if (WriteDate !== "") {
+      const DateArr = WriteDate.split("-");
       const year = DateArr[0];
       const month = DateArr[1];
       const day = DateArr[2];
@@ -48,10 +47,17 @@ const Write = () => {
     setLoading(false);
   };
 
+  const Reset = () => {
+    setName("");
+    setWriteDate("");
+    setRelation(null);
+    setFamilyOrigin(null);
+  };
+
   return (
     <Container fluid style={{ backgroundColor: "#e5e4e9" }}>
       <Row style={{ justifyContent: "center" }}>
-        <Col xs={10} sm={10} md={6} style={{ margin: 32 }}>
+        <Col xs={10} sm={10} md={6} style={{ margin: 16 }}>
           <Row>
             <span
               style={{ fontFamily: "SBAggroB", fontSize: 32, color: "#436b95" }}
@@ -69,62 +75,185 @@ const Write = () => {
         </Col>
       </Row>
       <Row style={{ justifyContent: "center" }}>
-        <Col xs={10} sm={10} md={4} style={{ padding: 16 }}>
+        <Col xs={10} sm={10} md={6} style={{ padding: 8 }}>
           <form>
             <FormControl style={{ width: "100%" }}>
-              <InputLabel htmlFor="my-input">
-                제주 이름 (성 제외, 한글 또는 한자)
-              </InputLabel>
-              <Input onChange={(e) => setName(e.target.value)} />
-              <TextField
-                label="제사지내는 날짜 (양력)"
-                type="date"
-                defaultValue={Date}
-                style={{ marginTop: 16 }}
-                InputLabelProps={{
-                  shrink: true,
+              <Row
+                style={{
+                  alignItems: "center",
+                  marginTop: 16,
+                  textAlign: "center",
                 }}
-                onChange={(e) => setDate(e.target.value)}
-              />
-              <FormHelperText>
-                입력범위 : 1391년 2월 5일 ∼ 2050년 12월 31일
-              </FormHelperText>
-              <Autocomplete
-                options={RelationData}
-                getOptionLabel={(option) => option.label}
-                style={{ marginTop: 16 }}
-                renderInput={(params) => (
-                  <TextField
-                    {...params}
-                    label="제주와의 관계를 선택해주세요."
-                    variant="outlined"
+              >
+                <Col>
+                  <span
+                    style={{
+                      marginTop: 16,
+                      marginBottom: 4,
+                      fontFamily: "SBAggroL",
+                      fontSize: 18,
+                    }}
+                  >
+                    제주의 이름
+                  </span>
+                </Col>
+                <Col>
+                  <Input
+                    fullWidth
+                    value={Name}
+                    onChange={(e) => setName(e.target.value)}
+                    inputProps={{ style: { fontFamily: "SBAggroL" } }}
                   />
-                )}
-                onChange={(event, value) => setRelation(value)}
-              />
-              <Autocomplete
-                options={NameData}
-                getOptionLabel={(option) => option.label}
-                style={{ marginTop: 16 }}
-                renderInput={(params) => (
+                  <FormHelperText
+                    style={{ fontFamily: "SBAggroL", fontSize: 10 }}
+                  >
+                    성 제외, 한글 또는 한자
+                  </FormHelperText>
+                </Col>
+              </Row>
+
+              <Row
+                style={{
+                  alignItems: "center",
+                  marginTop: 16,
+                  textAlign: "center",
+                }}
+              >
+                <Col>
+                  <span
+                    style={{
+                      marginTop: 16,
+                      marginBottom: 4,
+                      fontFamily: "SBAggroL",
+                      fontSize: 18,
+                    }}
+                  >
+                    제사지내는 날짜 (양력)
+                  </span>
+                </Col>
+                <Col>
                   <TextField
-                    {...params}
-                    label="본관을 선택해주세요."
-                    variant="outlined"
+                    fullWidth
+                    type="date"
+                    value={WriteDate}
+                    InputLabelProps={{
+                      shrink: true,
+                    }}
+                    inputProps={{ style: { fontFamily: "SBAggroL" } }}
+                    onChange={(e) => setWriteDate(e.target.value)}
                   />
-                )}
-                onChange={(event, value) => setFamilyOrigin(value)}
-              />
+                  <FormHelperText
+                    style={{ fontFamily: "SBAggroL", fontSize: 10 }}
+                  >
+                    1391년 2월 5일 ∼ 2050년 12월 31일
+                  </FormHelperText>
+                </Col>
+              </Row>
+              <Row
+                style={{
+                  alignItems: "center",
+                  marginTop: 16,
+                  textAlign: "center",
+                }}
+              >
+                <Col>
+                  <span
+                    style={{
+                      marginTop: 16,
+                      marginBottom: 4,
+                      fontFamily: "SBAggroL",
+                      fontSize: 18,
+                    }}
+                  >
+                    제주와의 관계
+                  </span>
+                </Col>
+                <Col>
+                  <Autocomplete
+                    value={Relation}
+                    size="small"
+                    options={RelationData}
+                    getOptionLabel={(option) => option.label}
+                    renderInput={(params) => (
+                      <TextField
+                        InputProps={{ style: { fontSize: 6 } }}
+                        {...params}
+                        variant="outlined"
+                      />
+                    )}
+                    onChange={(event, value) => setRelation(value)}
+                  />
+                </Col>
+              </Row>
+              <Row
+                style={{
+                  alignItems: "center",
+                  marginTop: 16,
+                  textAlign: "center",
+                }}
+              >
+                <Col>
+                  <span
+                    style={{
+                      marginTop: 16,
+                      marginBottom: 4,
+                      fontFamily: "SBAggroL",
+                      fontSize: 18,
+                    }}
+                  >
+                    본관, 성씨
+                  </span>
+                </Col>
+                <Col>
+                  <Autocomplete
+                    value={FamilyOrigin}
+                    size="small"
+                    options={NameData}
+                    getOptionLabel={(option) => option.label}
+                    renderInput={(params) => (
+                      <TextField {...params} variant="outlined" />
+                    )}
+                    onChange={(event, value) => setFamilyOrigin(value)}
+                  />
+                </Col>
+              </Row>
             </FormControl>
-            <Button
-              fullWidth
-              variant="contained"
-              color="primary"
-              style={{ marginTop: 16 }}
-              onClick={WriteChukmoon}
-            >
-              축문 작성하기
-            </Button>
+            <Row style={{ justifyContent: "center" }}>
+              <Col>
+                <Button
+                  fullWidth
+                  variant="contained"
+                  style={{
+                    marginTop: 32,
+                    fontFamily: "SBAggroL",
+                    color: "#ffffff",
+                    justifyContent: "center",
+                    backgroundColor: "#436b95",
+                    borderRadius: 20,
+                  }}
+                  onClick={WriteChukmoon}
+                >
+                  축문 작성하기
+                </Button>
+              </Col>
+              <Col>
+                <Button
+                  fullWidth
+                  variant="contained"
+                  style={{
+                    marginTop: 32,
+                    fontFamily: "SBAggroL",
+                    color: "#ffffff",
+                    justifyContent: "center",
+                    backgroundColor: "gray",
+                    borderRadius: 20,
+                  }}
+                  onClick={Reset}
+                >
+                  초기화
+                </Button>
+              </Col>
+            </Row>
           </form>
         </Col>
       </Row>

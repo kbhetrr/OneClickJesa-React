@@ -101,9 +101,6 @@ const Write = () => {
   const [FamilyOrigin, setFamilyOrigin] = useState(null);
   const [Loading, setLoading] = useState(false);
 
-  const [isMakeChukmoon, setisMakeChukmoon] = useState(false);
-  const [ChukmoonData, setChukmoonData] = useState({});
-
   const [Hang1, setHang1] = useState("");
 
   const WriteChukmoon = () => {
@@ -170,9 +167,6 @@ const Write = () => {
     }).catch((e) => {
       console.log(e);
     });
-
-    setChukmoonData(ChukmoonHangulData);
-    setisMakeChukmoon(true);
 
     setLoading(false);
   };

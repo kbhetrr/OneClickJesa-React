@@ -26,7 +26,7 @@ const DATA = [
   "     우ㅇ",
 ];
 
-const DATA_HANGUL_1 = [
+const DATA_HANGUL = [
   "유 세차 ㅇㅇ ㅇㅇ월 ㅇㅇ 삭 ㅇㅇ일 ㅇㅇ",
   "효자 ㅇㅇ 감소고우",
   "현고학생부군 세서천역",
